@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "Quraner",
+    "slug": "quraner",
+    "version": "1.0.0",
+    "scheme": "quraner",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/quranerlogo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F766E"
+    },
+    "plugins": [
+      "expo-dev-client",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/quranerlogo.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#0F766E"
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.quraner.app",
+      "splash": {
+        "image": "./assets/quranerlogo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0F766E"
+      }
+    },
+    "android": {
+      "package": "com.quraner.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "splash": {
+        "image": "./assets/quranerlogo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0F766E"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
