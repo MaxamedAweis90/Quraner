@@ -5,6 +5,17 @@ import PressableScale from '../components/PressableScale';
 export default function OnboardingScreen({ navigation }: any) {
   return (
     <View className="flex-1 bg-bg-app">
+      <View className="px-5 pt-4">
+        <View className="flex-row items-center justify-between">
+          <PressableScale
+            onPress={() => navigation.goBack()}
+            contentClassName="w-10 h-10 rounded-full bg-bg-surface-alt border border-border-soft items-center justify-center"
+          >
+            <Text className="text-brand-primary text-h3 font-bold">&lt;</Text>
+          </PressableScale>
+          <View />
+        </View>
+      </View>
       <ScrollView contentContainerStyle={{ padding: 20, paddingBottom: 10 }} showsVerticalScrollIndicator={false}>
         <View className="items-center mt-6 mb-3">
           <Image source={require('../../assets/quranerlogo.png')} style={{ width: 160, height: 160, marginBottom: 14 }} resizeMode="contain" />

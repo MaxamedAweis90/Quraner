@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreenExpo from 'expo-splash-screen';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './src/lib/queryClient';
 import { restoreQueryClient } from './src/lib/queryClientPersister';
 import AppNavigator from './src/navigation/AppNavigator';
-import { View } from 'react-native';
+import { View, Animated, StyleSheet } from 'react-native';
 import { ThemeProvider } from './src/theme/ThemeProvider';
 import SplashScreen from './src/screens/SplashScreen';
 
@@ -14,6 +14,8 @@ SplashScreenExpo.preventAutoHideAsync().catch(() => {});
 
 export default function App() {
   const [hydrated, setHydrated] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const splashOpacity = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     let mounted = true;
@@ -44,21 +46,40 @@ export default function App() {
     };
   }, []);
 
-  if (!hydrated) {
-    return (
-      <ThemeProvider>
-        <SplashScreen />
-      </ThemeProvider>
-    );
-  }
+  useEffect(() => {
+    if (!hydrated) return;
+    Animated.timing(splashOpacity, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => setShowSplash(false));
+  }, [hydrated, splashOpacity]);
 
   return (
     <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppNavigator />
-        <StatusBar style="auto" />
-      </QueryClientProvider>
+      {!hydrated ? (
+        <SplashScreen />
+      ) : (
+        <View style={styles.appRoot}>
+          <QueryClientProvider client={queryClient}>
+            <AppNavigator />
+            <StatusBar style="auto" />
+          </QueryClientProvider>
+          {showSplash && (
+            <Animated.View style={[styles.splashOverlay, { opacity: splashOpacity }]}> 
+              <SplashScreen />
+            </Animated.View>
+          )}
+        </View>
+      )}
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  appRoot: { flex: 1 },
+  splashOverlay: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});
 

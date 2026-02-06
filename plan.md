@@ -148,9 +148,9 @@ Performance:
 ========================
 Design schemas and indexes. Use 1 database with multiple collections.
 
-A) users_profile
+A) users
 - userId (string, same as Appwrite auth user id, unique)
-- displayName
+- name
 - gender: 'brother' | 'sister'
 - countryCode (string, ISO alpha-2)
 - countryName (string)
@@ -160,6 +160,7 @@ A) users_profile
 B) avatars
 - avatarId
 - name
+- username
 - assetType (lottie|rive|other)
 - assetRef (storage file id or URL)
 - genderTag (optional)
@@ -217,7 +218,7 @@ G) friendships
 - status: pending|accepted|blocked
 - createdAt
 
-H) deletion_requests
+H) deletion
 - userId
 - requestedAt
 - scheduledDeletionAt (requestedAt + 30 days)

@@ -27,7 +27,7 @@ This file tracks the implementation tasks derived from the project plan and mark
 - [ ] Persist session & tokens securely (use SecureStore when integrating Appwrite tokens)
 
 ## M1.2 — Create Plan Wizard & Server Integration
-- [ ] Wizard UI with steps A..H (goal, weekdays, times, start date, gender, country, avatar, review)
+- [~] Wizard UI with steps A..H (goal, weekdays, times, start date, gender, country, avatar, review) — Step A/B implemented
 - [ ] Call `createPlan` Appwrite Function on submit and show `Creating Plan` loading
 - [ ] Prefetch plan + today's sessions + streak and navigate to Home
 

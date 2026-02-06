@@ -1,9 +1,13 @@
-import { loginWithEmail, getAccount, logout as appwriteLogout } from '../lib/appwrite';
+import { loginWithIdentifier, loginWithGoogle, getAccount, logout as appwriteLogout } from '../lib/appwrite';
 
-export async function login(email: string, password: string) {
-  const session = await loginWithEmail(email, password);
+export async function login(identifier: string, password: string) {
+  const session = await loginWithIdentifier(identifier, password);
   // Optionally fetch account info here
   return session;
+}
+
+export async function loginGoogle() {
+  return loginWithGoogle();
 }
 
 export async function logout() {

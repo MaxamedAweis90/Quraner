@@ -1,0 +1,9 @@
+{
+  "name": "quraner-create-plan",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-appwrite": "^14.0.1"
+  }
+}

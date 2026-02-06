@@ -1,52 +1,91 @@
-# Data Schema (concise)
+# Data Schema (Appwrite)
 
-All timestamps: ISO8601 strings (UTC). IDs: UUID strings.
+Database: `quraner_db`
 
-Interfaces (TypeScript examples):
+Notes:
+- Appwrite built-in timestamps: `$createdAt`, `$updatedAt` are used instead of custom fields.
+- Date fields below use Appwrite `datetime` type.
+- IDs: use Appwrite document IDs (userId matches auth `$id`).
 
-interface Plan {
-  id: string;
-  title: string;
-  startDate: string; // ISO8601
-  endDate?: string;
-  targetPages: number;
-  createdAt: string;
-  updatedAt: string;
-}
+Collections:
 
-interface Session {
-  id: string;
-  planId: string;
-  date: string; // ISO8601
-  pagesRead: number;
-  durationMinutes?: number;
-  notes?: string;
-  createdAt: string;
-}
+## users
+- userId (string, unique)
+- name (string)
+- username (string, unique)
+- email (string, unique)
+- gender (enum: Brother | Sister, required)
+- countryCode (string, optional)
+- countryName (string, optional)
+- avatarId (string, optional)
 
-interface Bookmark {
-  id: string;
-  surah: number;
-  ayah: number;
-  note?: string;
-  createdAt: string;
-}
+## avatars
+- avatarId (string)
+- name (string)
+- username (string, optional)
+- assetType (string)
+- assetRef (string)
+- genderTag (string, optional)
+- isActive (boolean)
 
-interface Settings {
-  locale: string;
-  theme: 'light'|'dark'|'system';
-  notificationsEnabled: boolean;
-}
+## plans
+- planId (string)
+- userId (string)
+- goalKhatms (integer)
+- totalPages (integer)
+- startDate (datetime)
+- planRangeDays (integer)
+- weekdaysActive (integer[])
+- salahSessionsEnabled (string, JSON)
+- planDaysCount (integer)
+- pagesPerReadingDay (integer)
+- status (string: active | archived)
 
-Storage choices:
-- Local-first: SQLite (expo-sqlite) or MMKV/AsyncStorage for simple needs.
-- Sync strategy: Last-write-wins with server timestamps or per-field versioning.
+## plan_days
+- planDayId (string)
+- planId (string)
+- userId (string)
+- date (datetime)
+- totalPagesTarget (integer)
+- pagesAssigned (integer)
+- isRestDay (boolean)
+- completed (boolean)
+- missed (boolean)
 
-Appwrite collections (short):
-- `users_profile` — userId, displayName, gender, countryCode, avatarId, totalDaysRead, streak info
-- `avatars` — avatarId, name, assetType, assetRef, genderTag, isActive
-- `plans` — planId, userId, goalKhatms, totalPages, startDate, planRangeDays, weekdaysActive, salahSessionsEnabled, pagesPerReadingDay
-- `plan_days` — planDayId, planId, userId, date, totalPagesTarget, pagesAssigned, isRestDay, completed, missed
-- `plan_sessions` — sessionId, planDayId, userId, date, salahName, when, pagesTarget, completed, completedAt
-- `streaks` — userId, currentStreak, longestStreak, lastCompletedDate, totalDaysRead
-- `friendships`, `deletion_requests`, `events` follow earlier spec
+## plan_sessions
+- sessionId (string)
+- planDayId (string)
+- userId (string)
+- date (datetime)
+- salahName (string)
+- when (string: before | after)
+- pagesTarget (integer)
+- completed (boolean)
+- completedAt (datetime, optional)
+
+## streaks
+- userId (string, unique)
+- currentStreak (integer)
+- longestStreak (integer)
+- lastCompletedDate (datetime, optional)
+- totalDaysRead (integer)
+
+## friendships
+- requesterId (string)
+- addresseeId (string)
+- status (string: pending | accepted | blocked)
+- createdAt (datetime)
+
+## deletion
+- userId (string, unique)
+- requestedAt (datetime)
+- scheduledDeletionAt (datetime)
+- status (string: pending | cancelled | done)
+
+## events
+- eventId (string)
+- title (string)
+- startDate (datetime)
+- endDate (datetime, optional)
+- hijriInfo (string, optional)
+- isActive (boolean)

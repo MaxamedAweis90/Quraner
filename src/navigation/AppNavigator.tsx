@@ -6,6 +6,7 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import CreatingPlanScreen from '../screens/CreatingPlanScreen';
 import { useAuth } from '../hooks/useAuth';
 
 const Stack = createNativeStackNavigator();
@@ -37,10 +38,15 @@ export default function AppNavigator() {
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={require('../screens/RegisterScreen').default} />
+            <Stack.Screen name="CreatePlanWizard" component={require('../screens/CreatePlanWizard').default} />
+            <Stack.Screen name="CreatingPlan" component={CreatingPlanScreen} />
           </>
         ) : hasActivePlan === false ? (
           // Authenticated but no active plan -> run through wizard
-          <Stack.Screen name="CreatePlanWizard" component={require('../screens/CreatePlanWizard').default} />
+          <>
+            <Stack.Screen name="CreatePlanWizard" component={require('../screens/CreatePlanWizard').default} />
+            <Stack.Screen name="CreatingPlan" component={CreatingPlanScreen} />
+          </>
         ) : (
           <Stack.Screen name="Main" component={MainTabs} />
         )}
